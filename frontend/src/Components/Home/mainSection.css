@@ -1,0 +1,41 @@
+.text-col {
+    margin-top: 10%;
+}
+
+.img-col {
+    margin-top: 10%;
+    margin-left: 10%;
+}
+
+.main-sec {
+    height: 100vh;
+    background-color: #f9f9f9;
+}
+
+.sub-head {
+    color: #e91e63;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.sub-text {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.big-text {
+    color: #e91e63;
+    opacity: 0.7;
+    font-size: 6rem;
+    margin-top: 2rem;
+    letter-spacing: 0.2rem;
+    font-weight: 600;
+}
+
+.col-img {
+    border-radius: 10%;
+}
