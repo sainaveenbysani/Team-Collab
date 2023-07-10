@@ -1,0 +1,27 @@
+.dashboard {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.create-task-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+.create-project-button {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+}
+
+.project-list {
+  width: 30%;
+  margin-left: 10px;
+}
+
+.task-status {
+  width: 60%;
+  margin-right: 10px;
+}
