@@ -1,0 +1,54 @@
+/* Contact.css */
+
+.my {
+    padding: 20px;
+  }
+  
+  .my section {
+    background-color:lightskyblue;
+    padding: 40px 0;
+  }
+  
+  .my h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .my h5 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .my p {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .my .col-img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Optional: Customize the appearance of the image */
+  /*
+  .my .col-img {
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  */
+  
+  .my .col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .my .col:last-child {
+    text-align: center;
+  }
+  
+  .my .col:last-child p {
+    margin-top: 20px;
+  }
+  
