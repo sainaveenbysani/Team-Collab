@@ -6,33 +6,6 @@ import Login from './Components/LoginUser/LoginUser';
 import Register from './Components/RegisterUser/RegisterUser';
 import Dashboard from './Components/DashBoard/Dashboard';
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <div className="mainSection">
-//         <Home/>
-//       </div>
-//       <div className="mainSection">
-//         <LoginUser/>
-//       </div>
-//       <div className="mainSection">
-//         <RegisterUser/>
-//       </div>
-//       <div className="mainSection">
-//         <Contact/>
-//       </div>
-//       <div className="mainSection">
-//         <DashBoard/>
-//       </div>
-//       <div className="mainSection">
-//         <Task/>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
 function App() {
   return (
     <Router>
@@ -72,6 +45,5 @@ function App() {
     </Router>
   );
 }
-
 
 export default App;
