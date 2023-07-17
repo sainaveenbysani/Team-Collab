@@ -5,26 +5,12 @@ import AppIcon from './AppLogo.png';
 const Home = () => {
   return (
     <div>
-      <Header />
       <div className="homepage">
         <Logo />
         <AppDescription />
       </div>
       <Footer />
     </div>
-  );
-};
-
-const Header = () => {
-  return (
-    <header className="header">
-      
-      <nav>
-        <ul>
-         
-        </ul>
-      </nav>
-    </header>
   );
 };
 
