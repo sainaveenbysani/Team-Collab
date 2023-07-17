@@ -10,6 +10,7 @@ function App() {
   return (
     <Router>
       <div>
+      <header className="header">
         <nav>
           <ul>
             <li>
@@ -23,6 +24,7 @@ function App() {
             </li>
           </ul>
         </nav>
+        </header>
 
         <Switch>
           <Route path="/contact">

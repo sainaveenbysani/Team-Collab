@@ -1,7 +1,6 @@
 import React from 'react';
 import './Home.css';
 import AppIcon from './AppLogo.png';
-//import Login from '..Login/Login.js';
 
 const Home = () => {
   return (
@@ -12,39 +11,22 @@ const Home = () => {
         <AppDescription />
       </div>
       <Footer />
-      
     </div>
   );
 };
 
-// const Header = () => {
-//   return (
-//     <header className="header">
-//       <h1>TEAM COLLAB</h1>
-//       <nav>
-//         <ul>
-//           <li>About</li>
-//           <li>Login</li>
-//           <li>Contact</li>
-//         </ul>
-//       </nav>
-//     </header>
-//   );
-// };
 const Header = () => {
   return (
     <header className="header">
-      <h1>Team Collab</h1>
+      
       <nav>
         <ul>
-          <li><a href="#">Login</a></li>
-          <li><a href="#">Contact</a></li>
+         
         </ul>
       </nav>
     </header>
   );
 };
-
 
 const Logo = () => {
   return (
@@ -57,7 +39,7 @@ const Logo = () => {
 const AppDescription = () => {
   return (
     <div className="app-description">
-      <h1>Welcome to the Team Collab</h1>
+      <h1>Welcome to Team Collab</h1>
       <p>
         Team Collab is a one-time solution that powers collaboration across all teams from the client to the end customer during the process of delivering high-quality output.
         It helps in segregating & assigning the whole work among individuals in the team.

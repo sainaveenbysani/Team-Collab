@@ -28,15 +28,21 @@
   text-align: center;
 }
 /* Styles for the header */
+/* Styles for the header */
+/* Styles for the header */
 .header {
   background-color: #333;
   color: #fff;
-  padding: 20px;
+  padding: 10px 40px; /* Increase the padding to increase the width and decrease the height */
+  max-width: 2000px; /* Adjust the max-width as desired */
+  max-height: 30px; /* Adjust the max-height to decrease the height */
+  margin: 0 auto;
 }
 
 .header h1 {
   margin: 0;
   font-size: 24px;
+ 
 }
 
 .header nav ul {
@@ -58,6 +64,7 @@
 .header nav ul li a:hover {
   text-decoration: underline;
 }
+
 
 
 /* Styles for the homepage */
