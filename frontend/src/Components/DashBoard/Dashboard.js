@@ -1,5 +1,6 @@
 import Task from '../Task/Task.js';
-import React,{useState} from 'react';
+import React, { useState } from 'react';
+import Project from '../Project/Project.js'; // Assuming the path to the Project.js file
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class Dashboard extends React.Component {
       isTaskPopupOpen: false, // State to control the Task popup
       selectedDropdown: 'To-do', // Selected dropdown value
       panels: ['To-do', 'Complete', 'Approve'], // Array of panels
+      isProjectPopupOpen: false, // State to control the Project popup
     };
   }
 
@@ -22,8 +24,14 @@ class Dashboard extends React.Component {
     this.setState({ selectedDropdown: event.target.value });
   };
 
+  openProjectPopup = () => {
+    this.setState((prevState) => ({
+      isProjectPopupOpen: !prevState.isProjectPopupOpen,
+    }));
+  };
+
   render() {
-    const { isTaskPopupOpen, selectedDropdown, panels } = this.state;
+    const { isTaskPopupOpen, selectedDropdown, panels, isProjectPopupOpen } = this.state;
 
     return (
       <div className="dashboard">
@@ -31,10 +39,10 @@ class Dashboard extends React.Component {
           <h1>Dashboard</h1>
         </header>
         <div className="topbar">
-          <button className="create-task-button" style={{ float: 'Right' }} onClick={this.openTaskPopup}>
+          <button className="create-task-button" style={{ float: 'right' }} onClick={this.openTaskPopup}>
             {isTaskPopupOpen ? 'Close Task' : 'Create Task'}
           </button>
-          <button className="create-project-button" style={{ float: 'left' }}>
+          <button className="create-project-button" style={{ float: 'left' }} onClick={this.openProjectPopup}>
             Create Project
           </button>
         </div>
@@ -48,29 +56,13 @@ class Dashboard extends React.Component {
           </select>
         </div>
         <div className="task-columns">
-          {selectedDropdown === 'To-do' && (
-            <div className="task-column">
-              <h3>{selectedDropdown} Tasks</h3>
-              {/* Render To-do tasks */}
-            </div>
-          )}
-          {selectedDropdown === 'Complete' && (
-            <div className="task-column">
-              <h3>{selectedDropdown} Tasks</h3>
-              {/* Render Complete tasks */}
-            </div>
-          )}
-          {selectedDropdown === 'Approve' && (
-            <div className="task-column">
-              <h3>{selectedDropdown} Tasks</h3>
-              {/* Render Approve tasks */}
-            </div>
-          )}
+          {/* ... Render tasks based on selectedDropdown ... */}
         </div>
         <footer>
           <p>Copyright © 2023</p>
         </footer>
         {isTaskPopupOpen && <Task onClose={this.openTaskPopup} />}
+        {isProjectPopupOpen && <Project />} {/* Render Project popup */}
       </div>
     );
   }
