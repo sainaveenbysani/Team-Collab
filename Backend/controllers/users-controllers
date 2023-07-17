@@ -75,45 +75,23 @@ const signup = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { userName, password } = req.body;
+  console.log(userName);
+  console.log(password);
 
   let existingUser;
 
   try {
-    existingUser = await User.findOne({ email: email });
+    existingUser = await User.findOne({ name: userName });
   } catch (err) {
     return res.status(500).json( { message: 'Login failed'  });
   }
-
-  let isValidPassword = false;
-  
-  try{
-    isValidPassword = await bcrypt.compare(password,existingUser.password );
-  }
-  catch(err){
-    return res.status(500).json({message : 'InValid Password'});
+  console.log(existingUser);
+  if (!existingUser || existingUser.password !== password) {
+    return res.status(422).json( { message: 'Invalid credentials'  });
   }
 
- if (!isValidPassword) {
-    return res.status(422).json( { message: 'Invalid credentials' });
-  } 
-  let token;
-  try{
-    token=jwt.sign({
-      userId : existingUser.userId,
-      email:existingUser.email
-    },'secret_key_do_not_share',{expiresIn:'1hr'});
-  }
-  catch(err){
-    return res.status(500).json({message : 'Could not create user'});
-  }
-
-  return res.status(201).json({
-    userId : existingUser.userId,
-    email:existingUser.email,
-    token:token
-  })
-  //return res.json({ message: 'Logged in!' });
+  res.json({ message: 'Logged in!' });
 };
 
 module.exports  = { signup, login };

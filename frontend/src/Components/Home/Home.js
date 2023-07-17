@@ -6,7 +6,6 @@ import AppIcon from './AppLogo.png';
 const Home = () => {
   return (
     <div>
-      <Header />
       <div className="homepage">
         <Logo />
         <AppDescription />
@@ -16,35 +15,6 @@ const Home = () => {
     </div>
   );
 };
-
-// const Header = () => {
-//   return (
-//     <header className="header">
-//       <h1>TEAM COLLAB</h1>
-//       <nav>
-//         <ul>
-//           <li>About</li>
-//           <li>Login</li>
-//           <li>Contact</li>
-//         </ul>
-//       </nav>
-//     </header>
-//   );
-// };
-const Header = () => {
-  return (
-    <header className="header">
-      <h1>Team Collab</h1>
-      <nav>
-        <ul>
-          <li><a href="#">Login</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </nav>
-    </header>
-  );
-};
-
 
 const Logo = () => {
   return (
