@@ -1,54 +1,52 @@
 /* Contact.css */
 
 .my {
-    padding: 20px;
-  }
-  
-  .my section {
-    background-color:lightskyblue;
-    padding: 40px 0;
-  }
-  
-  .my h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .my h5 {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .my p {
-    font-size: 16px;
-    margin-bottom: 5px;
-  }
-  
-  .my .col-img {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  /* Optional: Customize the appearance of the image */
-  /*
-  .my .col-img {
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
-  */
-  
-  .my .col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .my .col:last-child {
-    text-align: center;
-  }
-  
-  .my .col:last-child p {
-    margin-top: 20px;
-  }
-  
+  padding: 20px;
+}
+
+.my section {
+  background-color: #1311119f; /* Light gray background color */
+  padding: 40px 0;
+}
+
+.my h2 {
+  font-size: 28px; /* Larger font size for section headings */
+  margin-bottom: 20px;
+  color: #333; /* Darker text color */
+  text-align: center; /* Center-align the section heading */
+}
+
+.my h5 {
+  font-size: 22px; /* Larger font size for subheadings */
+  margin-bottom: 10px;
+  color: #555; /* Slightly darker text color */
+}
+
+.my p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #666; /* Darker text color for paragraphs */
+}
+
+.my .col-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%; /* Make the image circular */
+  box-shadow: 0 0 10px rgba(17, 0, 0, 0.918); /* Add a subtle shadow to the image */
+}
+
+.my .col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.my .col:last-child {
+  text-align: center;
+}
+
+.my .col:last-child p {
+  margin-top: 20px;
+  font-style: italic; /* Make the last paragraph italic */
+}

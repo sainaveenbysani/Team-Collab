@@ -9,6 +9,7 @@ import Dashboard from './Components/DashBoard/Dashboard';
 import { AuthContext } from './Shared/context/auth-context';
 
 function App() {
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const login = useCallback(() => {
