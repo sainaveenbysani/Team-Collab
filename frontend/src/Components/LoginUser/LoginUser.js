@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import './LoginUser.css'; 
+import { Link } from 'react-router-dom';
 
 const LoginUser= props =>{
   const [enteredUsername, setUsername ] = useState('');
@@ -27,6 +28,7 @@ const LoginUser= props =>{
       <label htmlFor="passWord"><strong>Password:</strong></label>
       <input type="password" id="passWord" name="passWord" value={enteredPassword} onChange={passwordChangeHandler} required /><br />
       <button type="submit">Login</button>
+      <p>Please login or <Link to="/register">register</Link> if you don't have an account.</p>
     </form>{loginMessage&&
       <p><strong>{loginMessage}</strong></p>
     }
