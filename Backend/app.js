@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const usersRoutes = require("./routes/users-routes");
+const taskRoutes= require("./routes/task-routes");
+const teamsRoutes = require("./routes/teams-routes");
 
 const app = express(); 
 app.use(bodyParser.json());
@@ -28,6 +30,8 @@ app.use((req, res, next) => {
 
 
 app.use("/api/users", usersRoutes);
+app.use("/api/task",taskRoutes);
+app.use("/api/teams",teamsRoutes);
 
 app.use((error, req, res,next) => {
 
