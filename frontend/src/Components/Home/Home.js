@@ -31,7 +31,7 @@ const AppDescription = () => {
         It helps in segregating & assigning the whole work among individuals in the team.
         This powerful app also helps in tracking the status of tasks assigned over a period.
         Additionally, it has a feature to approve the task once it is completed by the respective team member.
-        It has more features like team status, project status, individual status to track the tasks more closely.
+        It has more features like team status, Team status, individual status to track the tasks more closely.
       </p>
     </div>
   );
