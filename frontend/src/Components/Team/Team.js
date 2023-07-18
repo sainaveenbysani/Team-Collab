@@ -4,19 +4,19 @@ import './Team.css';
 const Team = ({ onClose }) => {
   const [TeamName, setTeamName] = useState('');
   const [teamLead, setTeamLead] = useState('');
-  const [teamNames, setTeamNames] = useState('');
+  const [teamMembers, setTeamMembers] = useState('');
   const [users, setUsers] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Validate and process the form data
-    if (TeamName.trim() === '' || teamLead.trim() === '' || teamNames.trim() === '') {
-      alert('Please enter Team name, team lead, and team names.');
+    if (TeamName.trim() === '' || teamLead.trim() === '' || teamMembers.trim() === '') {
+      alert('Please enter Team name, team lead, and team Members.');
       return;
     }
 
-    // Process the team names to extract individual teams
-    const teamNamesArray = teamNames.split(',').map((team) => team.trim());
+    // Process the team Members to extract individual teams
+    const teamMembersArray = teamMembers.split(',').map((team) => team.trim());
 
     // Process the team lead and users to extract individual members
     const userListArray = teamLead.split(',').map((user) => user.trim());
@@ -25,7 +25,7 @@ const Team = ({ onClose }) => {
     // Clear the form fields after submission
     setTeamName('');
     setTeamLead('');
-    setTeamNames('');
+    setTeamMembers('');
 
     // Close the Team form
     onClose();
@@ -55,11 +55,11 @@ const Team = ({ onClose }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="teamNames">Team Members (comma-separated):</label>
+          <label htmlFor="teamMembers">Team Members (comma-separated):</label>
           <textarea
-            id="teamNames"
-            value={teamNames}
-            onChange={(e) => setTeamNames(e.target.value)}
+            id="teamMembers"
+            value={teamMembers}
+            onChange={(e) => setTeamMembers(e.target.value)}
             required
           />
         </div>
