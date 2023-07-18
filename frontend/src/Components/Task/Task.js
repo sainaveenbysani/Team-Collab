@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './Task.css'; // Import the CSS file
 
-const Task = props => {
+const Task = ({ onClose }) => {
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
-  const [projectName, setProjectName] = useState('');
+  const [TeamName, setTeamName] = useState('');
   const [taskStatus, setTaskStatus] = useState('');
   const [taskType, setTaskType] = useState('');
   const [assignedTo, setAssignedTo] = useState('');
@@ -22,7 +22,7 @@ const Task = props => {
     const newTask = {
       taskName,
       taskDescription,
-      projectName,
+      TeamName,
       taskStatus,
       taskType,
       assignedTo,
@@ -37,7 +37,7 @@ const Task = props => {
     // Reset the form fields
     setTaskName('');
     setTaskDescription('');
-    setProjectName('');
+    setTeamName('');
     setTaskStatus('');
     setTaskType('');
     setAssignedTo('');
@@ -45,6 +45,9 @@ const Task = props => {
     setComments('');
     setAttachments('');
     setPriority('');
+
+    // Close the Task form
+    onClose();
   };
 
   const handleApprove = () => {
@@ -58,7 +61,7 @@ const Task = props => {
     <div className="container"> {/* Apply the container class */}
       <h2>Add New Task</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+      <div className="form-group">
           <label>Task Name:</label>
           <input
             type="text"
@@ -78,11 +81,11 @@ const Task = props => {
         </div>
 
         <div className="form-group">
-          <label>Project Name:</label>
+          <label>Team Name:</label>
           <input
             type="text"
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
+            value={TeamName}
+            onChange={(e) => setTeamName(e.target.value)}
             className="form-control"
           />
         </div>
@@ -160,6 +163,7 @@ const Task = props => {
           </select>
         </div>
 
+        {/* ... Form fields ... */}
         <button type="submit" className="btn btn-primary">Add Task</button>
       </form>
 
