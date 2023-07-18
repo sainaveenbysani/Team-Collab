@@ -10,7 +10,7 @@ const Task = ({ onClose }) => {
   const [assignedTo, setAssignedTo] = useState('');
   const [approvedBy, setApprovedBy] = useState('');
   const [comments, setComments] = useState('');
-  const [attachments, setAttachments] = useState('');
+  //const [attachments, setAttachments] = useState('');
   const [priority, setPriority] = useState('');
 
   const handleSubmit = (e) => {
@@ -28,7 +28,7 @@ const Task = ({ onClose }) => {
       assignedTo,
       approvedBy,
       comments,
-      attachments,
+   //   attachments,
       priority
     };
 
@@ -43,7 +43,7 @@ const Task = ({ onClose }) => {
     setAssignedTo('');
     setApprovedBy('');
     setComments('');
-    setAttachments('');
+  //  setAttachments('');
     setPriority('');
 
     // Close the Task form
@@ -89,15 +89,18 @@ const Task = ({ onClose }) => {
             className="form-control"
           />
         </div>
-
         <div className="form-group">
           <label>Task Status:</label>
-          <input
-            type="text"
+          <select
             value={taskStatus}
             onChange={(e) => setTaskStatus(e.target.value)}
             className="form-control"
-          />
+          >
+            <option value="">Set Status</option>
+            <option value="Low">TODO</option>
+            <option value="Medium">InProgress</option>
+            <option value="High">Completed</option>
+          </select>
         </div>
 
         <div className="form-group">
@@ -138,7 +141,7 @@ const Task = ({ onClose }) => {
             className="form-control"
           />
         </div>
-
+{/* 
         <div className="form-group">
           <label>Attachments:</label>
           <input
@@ -147,7 +150,7 @@ const Task = ({ onClose }) => {
             onChange={(e) => setAttachments(e.target.value)}
             className="form-control"
           />
-        </div>
+        </div> */}
 
         <div className="form-group">
           <label>Priority:</label>

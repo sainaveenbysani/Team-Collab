@@ -12,7 +12,7 @@ const teamSchema = new Schema(
     {
         teamName: {type: String, required: true, unique:true},
         teamLead: {type: String, required: true},
-        teamList: {type: String, required: true}
+        teamMembers: { type: [String], required: true }
     }
 )
 
