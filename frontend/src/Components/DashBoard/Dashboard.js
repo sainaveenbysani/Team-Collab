@@ -1,71 +1,90 @@
-import Task from '../Task/Task.js';
 import React, { useState } from 'react';
-import Project from '../Project/Project.js'; // Assuming the path to the Project.js file
+import Task from '../Task/Task.js';
+import Team from '../Team/Team.js'; // Assuming the path to the Team.js file
 
-class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      projects: [], // Array to hold the user's projects
-      isTaskPopupOpen: false, // State to control the Task popup
-      selectedDropdown: 'To-do', // Selected dropdown value
-      panels: ['To-do', 'Complete', 'Approve'], // Array of panels
-      isProjectPopupOpen: false, // State to control the Project popup
-    };
-  }
+const Dashboard = () => {
+  const [isTaskPopupOpen, setTaskPopupOpen] = useState(false);
+  const [isTeamPopupOpen, setTeamPopupOpen] = useState(false);
+  const [selectedDropdown, setSelectedDropdown] = useState('To-do');
+  const panels = ['To-do', 'Complete', 'Approve'];
 
-  openTaskPopup = () => {
-    this.setState((prevState) => ({
-      isTaskPopupOpen: !prevState.isTaskPopupOpen,
-    }));
+  const openTaskPopup = () => {
+    setTaskPopupOpen(true);
   };
 
-  handleDropdownChange = (event) => {
-    this.setState({ selectedDropdown: event.target.value });
+  const closeTaskPopup = () => {
+    setTaskPopupOpen(false);
   };
 
-  openProjectPopup = () => {
-    this.setState((prevState) => ({
-      isProjectPopupOpen: !prevState.isProjectPopupOpen,
-    }));
+  const handleDropdownChange = (event) => {
+    setSelectedDropdown(event.target.value);
   };
 
-  render() {
-    const { isTaskPopupOpen, selectedDropdown, panels, isProjectPopupOpen } = this.state;
+  const openTeamPopup = () => {
+    setTeamPopupOpen(true);
+  };
 
-    return (
-      <div className="dashboard">
-        <header>
-          <h1>Dashboard</h1>
-        </header>
-        <div className="topbar">
-          <button className="create-task-button" style={{ float: 'right' }} onClick={this.openTaskPopup}>
-            {isTaskPopupOpen ? 'Close Task' : 'Create Task'}
-          </button>
-          <button className="create-project-button" style={{ float: 'left' }} onClick={this.openProjectPopup}>
-            Create Project
-          </button>
-        </div>
-        <div className="dropdown-menu">
-          <select value={selectedDropdown} onChange={this.handleDropdownChange}>
-            {panels.map((panel) => (
-              <option key={panel} value={panel}>
-                {panel}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="task-columns">
-          {/* ... Render tasks based on selectedDropdown ... */}
-        </div>
-        <footer>
-          <p>Copyright © 2023</p>
-        </footer>
-        {isTaskPopupOpen && <Task onClose={this.openTaskPopup} />}
-        {isProjectPopupOpen && <Project />} {/* Render Project popup */}
+  const closeTeamPopup = () => {
+    setTeamPopupOpen(false);
+  };
+
+  return (
+    <div className="dashboard">
+      <header>
+        <h1>Dashboard</h1>
+      </header>
+      <div className="topbar">
+        <button className="create-task-button" style={{ float: 'right' }} onClick={openTaskPopup}>
+          {isTaskPopupOpen ? 'Close Task' : 'Create Task'}
+        </button>
+        <button className="create-Team-button" style={{ float: 'left' }} onClick={openTeamPopup}>
+          Create Team
+        </button>
       </div>
-    );
-  }
-}
+      <div className="dropdown-menu">
+        <select value={selectedDropdown} onChange={handleDropdownChange}>
+          {panels.map((panel) => (
+            <option key={panel} value={panel}>
+              {panel}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="task-columns">
+        {selectedDropdown === 'To-do' && (
+          <div className="task-column">
+            <h3>{selectedDropdown} Tasks</h3>
+            {/* Render To-do tasks */}
+          </div>
+        )}
+        {selectedDropdown === 'Complete' && (
+          <div className="task-column">
+            <h3>{selectedDropdown} Tasks</h3>
+            {/* Render Complete tasks */}
+          </div>
+        )}
+        {selectedDropdown === 'Approve' && (
+          <div className="task-column">
+            <h3>{selectedDropdown} Tasks</h3>
+            {/* Render Approve tasks */}
+          </div>
+        )}
+      </div>
+      {isTeamPopupOpen && (
+        <div className="popup-overlay">
+          <div className="popup-center">
+            <Team onClose={closeTeamPopup} />
+          </div>
+        </div>
+      )}
+      {isTaskPopupOpen && <Task onClose={closeTaskPopup} />}
+      <footer>
+        <p>Copyright © 2023</p>
+      </footer>
+      {/* {isTaskPopupOpen && <Task onClose={closeTaskPopup} />} */}
+    </div>
+  );
+};
+
 
 export default Dashboard;
