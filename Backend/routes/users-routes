@@ -10,19 +10,14 @@ const fileUpload = require('../middleware/file-upload.js');
 
 //router.get('/', usersController.getUsers);
 
-//STEP 2: modify the signup to include MULTER
-router.post(
-  '/signup',
-  fileUpload.single('image'), //expect an image key on incoming request; this is how you use the MULTER middelware
-  [
-    check('username')
+router.post('/signup',
+    check('userName')
       .not()
       .isEmpty(),
     check('email')
       .normalizeEmail()
       .isEmail(),
-    check('password').isLength({ min: 6 })
-  ],
+    check('password').isLength({ min: 6 }),
   usersController.signup
 );
 
