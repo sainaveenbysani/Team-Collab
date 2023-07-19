@@ -69,6 +69,28 @@
     font-size: 16px;
     margin-bottom: 5px;
   }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .right-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .update-button,
+  .delete-button {
+    padding: 8px 16px;
+    background-color: #293e63;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
   
   /* Optional: Customize other styles as needed */
   

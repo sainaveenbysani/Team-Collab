@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Update.css'; // Import the CSS file
+import { AuthContext } from '../../Shared/context/auth-context';
+import { useHttpClient } from '../../Shared/hooks/http-hook';
 
 const Update= ({ onClose, taskData }) => {
+  const auth = useContext(AuthContext);
+  const { isLoading, sendRequest } = useHttpClient();
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [teamName, setTeamName] = useState('');
@@ -75,12 +79,114 @@ const Update= ({ onClose, taskData }) => {
     onClose();
   };
 
-  const handleApprove = () => {
-    // Handle task approval logic here
+  const handleApprove = async (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
     // You can access the captured values from the state variables above
-    // Update the task status or perform any other necessary actions
-    console.log('Task Approved!');
+
+    // Create a new task object with the captured values
+    const updatedTask = {
+      taskName,
+      taskDescription,
+      teamName,
+      taskStatus,
+      taskType,
+      assignedTo,
+      approvedBy,
+      comments,
+      //   attachments,
+      priority,
+    };
+    try {
+      console.log(updatedTask);
+      const response = await sendRequest (
+        `http://localhost:3001/api/task/${taskName}`, 
+        'PUT',
+        JSON.stringify(updatedTask),
+        {
+          'Content-Type' : 'application/json'
+        }
+      );
+      console.log(response);
+      }
+      catch(err) {
+        console.log(err);
+      }
+    onClose();
   };
+
+  const handleDelete= async(e)=>{
+    e.preventDefault();
+    // Handle form submission logic here
+    // You can access the captured values from the state variables above
+
+    // Create a new task object with the captured values
+    const deleteTask = {
+      taskName,
+      taskDescription,
+      teamName,
+      taskStatus,
+      taskType,
+      assignedTo,
+      approvedBy,
+      comments,
+      //   attachments,
+      priority,
+    };
+    try {
+      console.log(deleteTask);
+      const response = await sendRequest (
+        `http://localhost:3001/api/task/${taskName}`, 
+        'DELETE',
+        JSON.stringify(deleteTask),
+        {
+          'Content-Type' : 'application/json'
+        }
+      );
+      console.log(response);
+      }
+      catch(err) {
+        console.log(err);
+      }
+    onClose();
+  }
+
+  const handleUpdate=async (e)=>{
+    e.preventDefault();
+    // Handle form submission logic here
+    // You can access the captured values from the state variables above
+
+    // Create a new task object with the captured values
+    const updatedTask = {
+      taskName,
+      taskDescription,
+      teamName,
+      taskStatus,
+      taskType,
+      assignedTo,
+      approvedBy,
+      comments,
+      //   attachments,
+      priority,
+    };
+    try {
+      console.log(updatedTask);
+      const response = await sendRequest (
+        `http://localhost:3001/api/task/${taskName}`, 
+        'PUT',
+        JSON.stringify(updatedTask),
+        {
+          'Content-Type' : 'application/json'
+        }
+      );
+      console.log(response);
+      }
+      catch(err) {
+        console.log(err);
+      }
+
+    onClose();
+  }
 
   return (
     <div className="container"> {/* Apply the container class */}
@@ -193,10 +299,12 @@ const Update= ({ onClose, taskData }) => {
         </div>
 
         {/* ... Form fields ... */}
-        <button type="submit" className="btn btn-primary">Update</button>
+        <div className = "button-container">
+        <button type="submit" className="btn btn-primary" onClick={handleUpdate}>Update</button>
+        <button type= "submit"onClick={handleDelete} className="btn btn-success">Delete</button>
+        <button type="submit" onClick={handleApprove} className="btn btn-success">Approve</button>
+        </div>
       </form>
-
-      <button onClick={handleApprove} className="btn btn-success">Delete</button>
     </div>
   );
 }

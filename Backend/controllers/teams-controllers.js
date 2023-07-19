@@ -30,8 +30,32 @@ const getTeamById = async (req, res, next) => {
   }
 };
 
-const updateTeamById = async (req, res, next) => {
-  const teamId = req.params.id;
+// const updateTeamByName = async (req, res, next) => {
+//   const teamName = req.params.id;
+//   const updatedTeamData = {};
+  
+//   if (req.body.teamName) {
+//     updatedTeamData.teamName = req.body.teamName;
+//   }
+//   if (req.body.teamLead) {
+//     updatedTeamData.teamLead = req.body.teamLead;
+//   }
+//   if (req.body.teamMembers) {
+//     const teamMembersArray = req.body.teamMembers.split(',').map((member) => member.trim());
+//     updatedTeamData.teamMembers = teamMembersArray;
+//   }
+
+//   try {
+//     const team = await Team.findByIdAndUpdate(teamName, updatedTeamData, { new: true });
+//     res.send(team);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('An error occurred while updating the team');
+//   }
+// };
+
+const updateTeamByName = async (req, res, next) => {
+  const teamName = req.params.teamName; // Assuming the route parameter is named "name" instead of "id"
   const updatedTeamData = {};
   
   if (req.body.teamName) {
@@ -46,7 +70,14 @@ const updateTeamById = async (req, res, next) => {
   }
 
   try {
-    const team = await Team.findByIdAndUpdate(teamId, updatedTeamData, { new: true });
+    // Find the team by teamName and update it
+    console.log(teamName);
+    const team = await Team.findOneAndUpdate({ teamName: teamName }, updatedTeamData, { new: true });
+    
+    if (!team) {
+      return res.status(404).send('Team not found');
+    }
+    
     res.send(team);
   } catch (error) {
     console.error(error);
@@ -56,13 +87,13 @@ const updateTeamById = async (req, res, next) => {
 
 
 const deleteTeam = async (req, res, next) => {
-  const teamId = req.params.id;
+  const teamName = req.params.teamName;
   try {
-    const team = await Team.findById(teamId);
+    const team = await Team.findOne({ teamName: teamName });
     if (!team) {
       return res.status(404).json({ message: 'Team not found' });
     }
-    await Team.findByIdAndRemove(teamId);
+    await Team.findOneAndRemove({ teamName: teamName });
     res.send('Team deleted successfully');
   } catch (error) {
     console.error(error);
@@ -85,7 +116,7 @@ const getTeamsByUser = async (req, res, next) => {
 module.exports = {
   createTeam,
   getTeamById,
-  updateTeamById,
+  updateTeamByName,
   deleteTeam,
   getTeamsByUser
 };

@@ -24,17 +24,38 @@ const createTask = async(req,res,next)=>{
 //   }
 // };
 
-const updateTaskById = async (req, res, next) => {
-  const taskId = req.params.id;
-  const updatedTaskData = req.body;
+// const updateTaskById = async (req, res, next) => {
+//   const taskId = req.params.id;
+//   const updatedTaskData = req.body;
   
-  try {
-    const task = await Task.findByIdAndUpdate(taskId, updatedTaskData);
+//   try {
+//     const task = await Task.findByIdAndUpdate(taskId, updatedTaskData);
     
+//     if (!task) {
+//       return res.status(404).json({ message: 'Task not found' });
+//     }
+    
+//     res.send(task);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('An error occurred while updating the task');
+//   }
+// };
+
+const updateTaskByName = async (req, res, next) => {
+  const taskName = req.params.taskName; // Assuming the task name is part of the URL
+  const updatedTaskData = req.body;
+
+  try {
+    console.log(taskName)
+    const task = await Task.findOneAndUpdate({ taskName: taskName }, updatedTaskData, {
+      new: true, // To return the updated document
+    });
+
     if (!task) {
       return res.status(404).json({ message: 'Task not found' });
     }
-    
+
     res.send(task);
   } catch (error) {
     console.error(error);
@@ -42,22 +63,42 @@ const updateTaskById = async (req, res, next) => {
   }
 };
 
-const deleteTask = async (req, res, next) => {
-  const taskId = req.params.id;
+
+// const deleteTask = async (req, res, next) => {
+//   const taskId = req.params.id;
   
-  try {
-    const task = await Task.findByIdAndRemove(taskId);
+//   try {
+//     const task = await Task.findByIdAndRemove(taskId);
     
+//     if (!task) {
+//       return res.status(404).json({ message: 'Task not found' });
+//     }
+    
+//     res.send('Task deleted successfully');
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('An error occurred while deleting the task');
+//   }
+// };
+
+
+const deleteTaskByName = async (req, res, next) => {
+  const taskName = req.params.taskName; // Assuming the task name is part of the URL
+
+  try {
+    const task = await Task.findOneAndRemove({ taskName: taskName });
+
     if (!task) {
       return res.status(404).json({ message: 'Task not found' });
     }
-    
+
     res.send('Task deleted successfully');
   } catch (error) {
     console.error(error);
     res.status(500).send('An error occurred while deleting the task');
   }
 };
+
 
 
 const getTasksByTeamAndStatus = async (req, res, next) => {
@@ -85,4 +126,4 @@ const getTaskByTeamName = async (req, res, next) => {
     res.status(500).send('An error occurred while retrieving the task');
   }
 };
-module.exports = {createTask, getTaskByTeamName, updateTaskById, deleteTask, getTasksByTeamAndStatus}
+module.exports = {createTask, getTaskByTeamName, updateTaskByName, deleteTaskByName, getTasksByTeamAndStatus}

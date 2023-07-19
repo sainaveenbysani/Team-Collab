@@ -69,13 +69,6 @@ const Task = ({ onClose }) => {
     onClose();
   };
 
-  const handleApprove = () => {
-    // Handle task approval logic here
-    // You can access the captured values from the state variables above
-    // Update the task status or perform any other necessary actions
-    console.log('Task Approved!');
-  };
-
   return (
     <div className="container"> {/* Apply the container class */}
       <h2>Add New Task</h2>
@@ -189,8 +182,6 @@ const Task = ({ onClose }) => {
         {/* ... Form fields ... */}
         <button type="submit" className="btn btn-primary">Add Task</button>
       </form>
-
-      <button onClick={handleApprove} className="btn btn-success">Approve</button>
     </div>
   );
 }

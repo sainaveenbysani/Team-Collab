@@ -111,7 +111,7 @@ const Dashboard = () => {
     <div className="dashboard">
       <div className="sidebar">
         <button className="create-team-button" onClick={openTeamPopup}>
-          Create Team
+          Manage Team
         </button>
         <ul className="Team-list">
           {teams.map((team) => (
