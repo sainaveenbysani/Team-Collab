@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Update.css'; // Import the CSS file
 
-const Update= ({ onClose }) => {
+const Update= ({ onClose, taskData }) => {
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
-  const [TeamName, setTeamName] = useState('');
+  const [teamName, setTeamName] = useState('');
   const [taskStatus, setTaskStatus] = useState('');
   const [taskType, setTaskType] = useState('');
   const [assignedTo, setAssignedTo] = useState('');
@@ -13,38 +13,63 @@ const Update= ({ onClose }) => {
   //const [attachments, setAttachments] = useState('');
   const [priority, setPriority] = useState('');
 
+  console.log(taskData);
+
+  useEffect(() => {
+    setTaskName(taskData.name);
+    setTaskDescription(taskData.taskDescription);
+    setTeamName(taskData.Team);
+    setTaskStatus(taskData.status);
+    setTaskType(taskData.taskType);
+    setAssignedTo(taskData.assignedTo);
+    setApprovedBy(taskData.approvedBy);
+    setComments(taskData.comments);
+    setPriority(taskData.priority);
+  }, [taskData]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission logic here
     // You can access the captured values from the state variables above
 
     // Create a new task object with the captured values
-    const newTask = {
+    const updatedTask = {
       taskName,
       taskDescription,
-      TeamName,
+      teamName,
       taskStatus,
       taskType,
       assignedTo,
       approvedBy,
       comments,
-   //   attachments,
-      priority
+      //   attachments,
+      priority,
     };
+    // const {
+    //   taskName,
+    //   taskDescription,
+    //   TeamName,
+    //   taskStatus,
+    //   taskType,
+    //   assignedTo,
+    //   approvedBy,
+    //   comments,
+    //   priority,
+    // } = taskData;
 
     // Perform additional actions with the new task object, such as sending it to an API or updating the task list
 
-    // Reset the form fields
-    setTaskName('');
-    setTaskDescription('');
-    setTeamName('');
-    setTaskStatus('');
-    setTaskType('');
-    setAssignedTo('');
-    setApprovedBy('');
-    setComments('');
-  //  setAttachments('');
-    setPriority('');
+  //   // Reset the form fields
+  //   setTaskName('');
+  //   setTaskDescription('');
+  //   setTeamName('');
+  //   setTaskStatus('');
+  //   setTaskType('');
+  //   setAssignedTo('');
+  //   setApprovedBy('');
+  //   setComments('');
+  // //  setAttachments('');
+  //   setPriority('');
 
     // Close the Task form
     onClose();
@@ -84,7 +109,7 @@ const Update= ({ onClose }) => {
           <label>Team Name:</label>
           <input
             type="text"
-            value={TeamName}
+            value={teamName}
             onChange={(e) => setTeamName(e.target.value)}
             className="form-control"
           />
@@ -97,9 +122,10 @@ const Update= ({ onClose }) => {
             className="form-control"
           >
             <option value="">Set Status</option>
-            <option value="Low">TODO</option>
-            <option value="Medium">InProgress</option>
-            <option value="High">Completed</option>
+            <option value="To-do">To-do</option>
+            <option value="InProgress">InProgress</option>
+            <option value="Complete">Complete</option>
+            <option value="Approved">Approved</option>
           </select>
         </div>
 

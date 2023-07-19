@@ -39,6 +39,12 @@ const Dashboard = () => {
               name: task.taskName,
               status: task.taskStatus,
               Team: task.teamName,
+              taskDescription: task.taskDescription,
+              taskType: task.taskType,
+              assignedTo: task.assignedTo,
+              approvedBy: task.approvedBy,
+              comments:task.comments,
+              priority: task.priority
             };
           });
           setTasks(filteredTasksData);
@@ -174,7 +180,7 @@ const Dashboard = () => {
       {selectedTask && ( // Display the Update.js pop-up when a task is selected
         <div className="popup-overlay" onClick={() => setSelectedTask(null)}>
           <div className="popup-center" onClick={(e) => e.stopPropagation()}>
-            <Update task={selectedTask} onClose={() => setSelectedTask(null)} />
+            <Update taskData={selectedTask} onClose={() => setSelectedTask(null)} />
           </div>
         </div>
       )}
