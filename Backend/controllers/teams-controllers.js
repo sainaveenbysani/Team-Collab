@@ -71,7 +71,7 @@ const updateTeamByName = async (req, res, next) => {
 
   try {
     // Find the team by teamName and update it
-    console.log(teamName);
+   // console.log(teamName);
     const team = await Team.findOneAndUpdate({ teamName: teamName }, updatedTeamData, { new: true });
     
     if (!team) {

@@ -47,7 +47,7 @@ const updateTaskByName = async (req, res, next) => {
   const updatedTaskData = req.body;
 
   try {
-    console.log(taskName)
+    //console.log(taskName)
     const task = await Task.findOneAndUpdate({ taskName: taskName }, updatedTaskData, {
       new: true, // To return the updated document
     });
