@@ -21,7 +21,6 @@ const Dashboard = () => {
       try {
         const storedUserName = localStorage.getItem("enteredUserName");
         const userName = JSON.parse(storedUserName);
-        console.log(userName);
         const response = await sendRequest(`http://localhost:3001/api/teams/user/${userName}`);
         setTeams(response.map((team) => team.teamName));
       } catch (error) {
