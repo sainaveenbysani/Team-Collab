@@ -1,4 +1,4 @@
-import React,{useState, useContext} from 'react';
+import React,{useState, useContext, useEffect} from 'react';
 import './LoginUser.css'; 
 import { Link } from 'react-router-dom';
 import { AuthContext} from '../../Shared/context/auth-context';
@@ -13,7 +13,12 @@ const LoginUser= props =>{
 
   const userNameChangeHandler = event =>{
     setUsername(event.target.value);
+    localStorage.setItem("enteredUserName", JSON.stringify(event.target.value));
   }
+  // useEffect(() => {
+  //   localStorage.setItem('enteredUserName', JSON.stringify(enteredUsername));
+  // }, [enteredUsername]);
+
   const passwordChangeHandler = event =>{
     setPassword(event.target.value);
   }
@@ -37,8 +42,8 @@ const LoginUser= props =>{
       catch(err) {
         console.log(err);
       }
-    setUsername('');
-    setPassword('');
+    // setUsername('');
+    // setPassword('');
   }
   return (
     <div>

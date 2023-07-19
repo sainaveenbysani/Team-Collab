@@ -10,19 +10,19 @@ const createTask = async(req,res,next)=>{
   res.status(200).json({ task: newTask.toObject({ getters: true }) });
 };
 
-const getTaskById = async (req, res, next) => {
-  const taskId = req.params.id;
-  try {
-    const task = await Task.findById(taskId);
-    if (!task) {
-      return res.status(404).json({ message: 'Task not found' });
-    }
-    res.json(task);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('An error occurred while retrieving the task');
-  }
-};
+// const getTaskById = async (req, res, next) => {
+//   const taskId = req.params.id;
+//   try {
+//     const task = await Task.findById(taskId);
+//     if (!task) {
+//       return res.status(404).json({ message: 'Task not found' });
+//     }
+//     res.json(task);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('An error occurred while retrieving the task');
+//   }
+// };
 
 const updateTaskById = async (req, res, next) => {
   const taskId = req.params.id;
@@ -71,4 +71,18 @@ const getTasksByTeamAndStatus = async (req, res, next) => {
   }
 };
 
-module.exports = {createTask, getTaskById, updateTaskById, deleteTask, getTasksByTeamAndStatus}
+const getTaskByTeamName = async (req, res, next) => {
+  const teamName = req.params.id;
+  try {
+    //console.log(teamName);
+    const tasks = await Task.find({teamName});
+    if (!tasks) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+    res.json(tasks);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('An error occurred while retrieving the task');
+  }
+};
+module.exports = {createTask, getTaskByTeamName, updateTaskById, deleteTask, getTasksByTeamAndStatus}

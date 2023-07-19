@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Task.css'; // Import the CSS file
+import { AuthContext } from '../../Shared/context/auth-context';
+import { useHttpClient } from '../../Shared/hooks/http-hook';
 
 const Task = ({ onClose }) => {
+  const auth = useContext(AuthContext);
+  const { isLoading, sendRequest } = useHttpClient();
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
-  const [TeamName, setTeamName] = useState('');
+  const [teamName, setTeamName] = useState('');
   const [taskStatus, setTaskStatus] = useState('');
   const [taskType, setTaskType] = useState('');
   const [assignedTo, setAssignedTo] = useState('');
@@ -13,7 +17,7 @@ const Task = ({ onClose }) => {
   //const [attachments, setAttachments] = useState('');
   const [priority, setPriority] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission logic here
     // You can access the captured values from the state variables above
@@ -22,7 +26,7 @@ const Task = ({ onClose }) => {
     const newTask = {
       taskName,
       taskDescription,
-      TeamName,
+      teamName,
       taskStatus,
       taskType,
       assignedTo,
@@ -31,6 +35,21 @@ const Task = ({ onClose }) => {
    //   attachments,
       priority
     };
+    try {
+      console.log(newTask);
+      const response = await sendRequest (
+        'http://localhost:3001/api/task', 
+        'POST',
+        JSON.stringify(newTask),
+        {
+          'Content-Type' : 'application/json'
+        }
+      );
+      console.log(response);
+      }
+      catch(err) {
+        console.log(err);
+      }
 
     // Perform additional actions with the new task object, such as sending it to an API or updating the task list
 
@@ -84,7 +103,7 @@ const Task = ({ onClose }) => {
           <label>Team Name:</label>
           <input
             type="text"
-            value={TeamName}
+            value={teamName}
             onChange={(e) => setTeamName(e.target.value)}
             className="form-control"
           />
@@ -97,9 +116,10 @@ const Task = ({ onClose }) => {
             className="form-control"
           >
             <option value="">Set Status</option>
-            <option value="Low">TODO</option>
-            <option value="Medium">InProgress</option>
-            <option value="High">Completed</option>
+            <option value="To-do">To-do</option>
+            <option value="InProgress">InProgress</option>
+            <option value="Complete">Complete</option>
+            <option value="Approved">Approved</option>
           </select>
         </div>
 
