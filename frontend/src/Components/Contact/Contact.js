@@ -17,7 +17,7 @@ export default function Contact() {
                         <Col>
                             <h2>TEAM COLLAB</h2>
                             <h5>We give a solution that powers collaboration across all teams from Client to end customer during the process of delivering high quality output. </h5><p> </p>
-                            <p>Contact at +1856-688-2177</p>
+                            <p>Contact at +1 (908)-560-2215, +1 (856)-688-2177</p>
                             <p>Email at teamcollab@gmail.com</p>
                         </Col>
                     </Row>
