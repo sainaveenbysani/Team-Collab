@@ -13,8 +13,8 @@ const router = express.Router();
 router.post('/',teamsController.createTeam);
 router.get('/:id', teamsController.getTeamById);
 router.get('/user/:userName',teamsController.getTeamsByUser);
-router.put('/:id', teamsController.updateTeamById);
-router.delete('/:id', teamsController.deleteTeam);
+router.put('/:teamName', teamsController.updateTeamByName);
+router.delete('/:teamName', teamsController.deleteTeam);
 
 
 module.exports = router;

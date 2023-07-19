@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
-import './Task.css'; // Import the CSS file
+import React, { useState, useEffect, useContext } from 'react';
+import './Update.css'; // Import the CSS file
 import { AuthContext } from '../../Shared/context/auth-context';
 import { useHttpClient } from '../../Shared/hooks/http-hook';
 
-const Task = ({ onClose }) => {
+const Update= ({ onClose, taskData }) => {
   const auth = useContext(AuthContext);
   const { isLoading, sendRequest } = useHttpClient();
   const [taskName, setTaskName] = useState('');
@@ -17,13 +17,27 @@ const Task = ({ onClose }) => {
   //const [attachments, setAttachments] = useState('');
   const [priority, setPriority] = useState('');
 
-  const handleSubmit = async (e) => {
+  console.log(taskData);
+
+  useEffect(() => {
+    setTaskName(taskData.name);
+    setTaskDescription(taskData.taskDescription);
+    setTeamName(taskData.Team);
+    setTaskStatus(taskData.status);
+    setTaskType(taskData.taskType);
+    setAssignedTo(taskData.assignedTo);
+    setApprovedBy(taskData.approvedBy);
+    setComments(taskData.comments);
+    setPriority(taskData.priority);
+  }, [taskData]);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission logic here
     // You can access the captured values from the state variables above
 
     // Create a new task object with the captured values
-    const newTask = {
+    const updatedTask = {
       taskName,
       taskDescription,
       teamName,
@@ -32,15 +46,135 @@ const Task = ({ onClose }) => {
       assignedTo,
       approvedBy,
       comments,
-   //   attachments,
-      priority
+      //   attachments,
+      priority,
+    };
+    // const {
+    //   taskName,
+    //   taskDescription,
+    //   TeamName,
+    //   taskStatus,
+    //   taskType,
+    //   assignedTo,
+    //   approvedBy,
+    //   comments,
+    //   priority,
+    // } = taskData;
+
+    // Perform additional actions with the new task object, such as sending it to an API or updating the task list
+
+  //   // Reset the form fields
+  //   setTaskName('');
+  //   setTaskDescription('');
+  //   setTeamName('');
+  //   setTaskStatus('');
+  //   setTaskType('');
+  //   setAssignedTo('');
+  //   setApprovedBy('');
+  //   setComments('');
+  // //  setAttachments('');
+  //   setPriority('');
+
+    // Close the Task form
+    onClose();
+  };
+
+  const handleApprove = async (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    // You can access the captured values from the state variables above
+
+    // Create a new task object with the captured values
+    const updatedTask = {
+      taskName,
+      taskDescription,
+      teamName,
+      taskStatus,
+      taskType,
+      assignedTo,
+      approvedBy,
+      comments,
+      //   attachments,
+      priority,
     };
     try {
-      console.log(newTask);
+      console.log(updatedTask);
       const response = await sendRequest (
-        'http://localhost:3001/api/task', 
-        'POST',
-        JSON.stringify(newTask),
+        `http://localhost:3001/api/task/${taskName}`, 
+        'PUT',
+        JSON.stringify(updatedTask),
+        {
+          'Content-Type' : 'application/json'
+        }
+      );
+      console.log(response);
+      }
+      catch(err) {
+        console.log(err);
+      }
+    onClose();
+  };
+
+  const handleDelete= async(e)=>{
+    e.preventDefault();
+    // Handle form submission logic here
+    // You can access the captured values from the state variables above
+
+    // Create a new task object with the captured values
+    const deleteTask = {
+      taskName,
+      taskDescription,
+      teamName,
+      taskStatus,
+      taskType,
+      assignedTo,
+      approvedBy,
+      comments,
+      //   attachments,
+      priority,
+    };
+    try {
+      console.log(deleteTask);
+      const response = await sendRequest (
+        `http://localhost:3001/api/task/${taskName}`, 
+        'DELETE',
+        JSON.stringify(deleteTask),
+        {
+          'Content-Type' : 'application/json'
+        }
+      );
+      console.log(response);
+      }
+      catch(err) {
+        console.log(err);
+      }
+    onClose();
+  }
+
+  const handleUpdate=async (e)=>{
+    e.preventDefault();
+    // Handle form submission logic here
+    // You can access the captured values from the state variables above
+
+    // Create a new task object with the captured values
+    const updatedTask = {
+      taskName,
+      taskDescription,
+      teamName,
+      taskStatus,
+      taskType,
+      assignedTo,
+      approvedBy,
+      comments,
+      //   attachments,
+      priority,
+    };
+    try {
+      console.log(updatedTask);
+      const response = await sendRequest (
+        `http://localhost:3001/api/task/${taskName}`, 
+        'PUT',
+        JSON.stringify(updatedTask),
         {
           'Content-Type' : 'application/json'
         }
@@ -51,27 +185,12 @@ const Task = ({ onClose }) => {
         console.log(err);
       }
 
-    // Perform additional actions with the new task object, such as sending it to an API or updating the task list
-
-    // Reset the form fields
-    setTaskName('');
-    setTaskDescription('');
-    setTeamName('');
-    setTaskStatus('');
-    setTaskType('');
-    setAssignedTo('');
-    setApprovedBy('');
-    setComments('');
-  //  setAttachments('');
-    setPriority('');
-
-    // Close the Task form
     onClose();
-  };
+  }
 
   return (
     <div className="container"> {/* Apply the container class */}
-      <h2>Add New Task</h2>
+      <h2>Update Task</h2>
       <form onSubmit={handleSubmit}>
       <div className="form-group">
           <label>Task Name:</label>
@@ -180,10 +299,14 @@ const Task = ({ onClose }) => {
         </div>
 
         {/* ... Form fields ... */}
-        <button type="submit" className="btn btn-primary">Add Task</button>
+        <div className = "button-container">
+        <button type="submit" className="btn btn-primary" onClick={handleUpdate}>Update</button>
+        <button type= "submit"onClick={handleDelete} className="btn btn-success">Delete</button>
+        <button type="submit" onClick={handleApprove} className="btn btn-success">Approve</button>
+        </div>
       </form>
     </div>
   );
 }
 
-export default Task;
+export default Update;

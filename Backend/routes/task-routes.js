@@ -13,8 +13,8 @@ const router = express.Router();
 router.post('/',taskController.createTask);
 router.get('/:id', taskController.getTaskByTeamName);
 router.get('/',taskController.getTasksByTeamAndStatus);
-router.put('/:id', taskController.updateTaskById);
-router.delete('/:id', taskController.deleteTask);
+router.put('/:taskName', taskController.updateTaskByName);
+router.delete('/:taskName', taskController.deleteTaskByName);
 
 
 module.exports = router;

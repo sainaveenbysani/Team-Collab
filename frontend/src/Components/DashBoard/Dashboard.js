@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import Task from '../Task/Task.js';
 import Team from '../Team/Team.js';
 import './Dashboard.css';
+import Update from '../Update/Update.js';
 import { AuthContext } from '../../Shared/context/auth-context';
 import { useHttpClient } from '../../Shared/hooks/http-hook';
 
@@ -15,6 +16,7 @@ const Dashboard = () => {
   const tabs = ['All', 'To-do', 'InProgress', 'Complete', 'Approved'];
   const [teams, setTeams] = useState([]);
   const [tasks, setTasks] = useState([]); // Added state for tasks
+  const [selectedTask, setSelectedTask] = useState(null);
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -37,6 +39,12 @@ const Dashboard = () => {
               name: task.taskName,
               status: task.taskStatus,
               Team: task.teamName,
+              taskDescription: task.taskDescription,
+              taskType: task.taskType,
+              assignedTo: task.assignedTo,
+              approvedBy: task.approvedBy,
+              comments:task.comments,
+              priority: task.priority
             };
           });
           setTasks(filteredTasksData);
@@ -75,6 +83,10 @@ const Dashboard = () => {
     setSelectedTeam(team);
   };
 
+  const handleTaskClick = (task) => {
+    setSelectedTask(task);
+  };
+
   const filteredTasks = tasks.filter((task) => {
     if (selectedTab === 'All' && selectedTeam === '') {
       return true; // Show all tasks when no tab or team is selected
@@ -99,7 +111,7 @@ const Dashboard = () => {
     <div className="dashboard">
       <div className="sidebar">
         <button className="create-team-button" onClick={openTeamPopup}>
-          Create Team
+          Manage Team
         </button>
         <ul className="Team-list">
           {teams.map((team) => (
@@ -141,7 +153,7 @@ const Dashboard = () => {
             </thead>
             <tbody>
               {filteredTasks.map((task) => (
-                <tr key={task.id}>
+                <tr key={task.id} onClick={() => handleTaskClick(task)}>
                   <td>{task.name}</td>
                   <td>{task.status}</td>
                   <td>{task.Team}</td>
@@ -162,6 +174,13 @@ const Dashboard = () => {
         <div className="popup-overlay" onClick={handleOverlayClick}>
           <div className="popup-center">
             <Task onClose={closeTaskPopup} />
+          </div>
+        </div>
+      )}
+      {selectedTask && ( // Display the Update.js pop-up when a task is selected
+        <div className="popup-overlay" onClick={() => setSelectedTask(null)}>
+          <div className="popup-center" onClick={(e) => e.stopPropagation()}>
+            <Update taskData={selectedTask} onClose={() => setSelectedTask(null)} />
           </div>
         </div>
       )}
