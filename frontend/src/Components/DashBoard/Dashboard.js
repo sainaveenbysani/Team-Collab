@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import Task from '../Task/Task.js';
 import Team from '../Team/Team.js';
 import './Dashboard.css';
+import Update from '../Update/Update.js';
 import { AuthContext } from '../../Shared/context/auth-context';
 import { useHttpClient } from '../../Shared/hooks/http-hook';
 
@@ -15,6 +16,7 @@ const Dashboard = () => {
   const tabs = ['All', 'To-do', 'InProgress', 'Complete', 'Approved'];
   const [teams, setTeams] = useState([]);
   const [tasks, setTasks] = useState([]); // Added state for tasks
+  const [selectedTask, setSelectedTask] = useState(null);
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -73,6 +75,10 @@ const Dashboard = () => {
 
   const handleTeamClick = async (team) => {
     setSelectedTeam(team);
+  };
+
+  const handleTaskClick = (task) => {
+    setSelectedTask(task);
   };
 
   const filteredTasks = tasks.filter((task) => {
@@ -141,7 +147,7 @@ const Dashboard = () => {
             </thead>
             <tbody>
               {filteredTasks.map((task) => (
-                <tr key={task.id}>
+                <tr key={task.id} onClick={() => handleTaskClick(task)}>
                   <td>{task.name}</td>
                   <td>{task.status}</td>
                   <td>{task.Team}</td>
@@ -162,6 +168,13 @@ const Dashboard = () => {
         <div className="popup-overlay" onClick={handleOverlayClick}>
           <div className="popup-center">
             <Task onClose={closeTaskPopup} />
+          </div>
+        </div>
+      )}
+      {selectedTask && ( // Display the Update.js pop-up when a task is selected
+        <div className="popup-overlay" onClick={() => setSelectedTask(null)}>
+          <div className="popup-center" onClick={(e) => e.stopPropagation()}>
+            <Update task={selectedTask} onClose={() => setSelectedTask(null)} />
           </div>
         </div>
       )}
