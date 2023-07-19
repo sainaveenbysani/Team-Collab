@@ -11,7 +11,7 @@ const router = express.Router();
 //router.get('/', usersController.getUsers);
 
 router.post('/',taskController.createTask);
-router.get('/:id', taskController.getTaskById);
+router.get('/:id', taskController.getTaskByTeamName);
 router.get('/',taskController.getTasksByTeamAndStatus);
 router.put('/:id', taskController.updateTaskById);
 router.delete('/:id', taskController.deleteTask);

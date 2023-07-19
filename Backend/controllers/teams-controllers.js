@@ -75,7 +75,7 @@ const getTeamsByUser = async (req, res, next) => {
   const { userName } = req.params;
   try {
     const teams = await Team.find({ teamMembers: userName });
-    res.json(teams);
+    res.status(200).json(teams);
   } catch (err) {
     console.error(err);
     res.status(500).send('An error occurred while retrieving teams');

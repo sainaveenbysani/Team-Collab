@@ -1,26 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Team.css';
+import { AuthContext } from '../../Shared/context/auth-context';
+import { useHttpClient } from '../../Shared/hooks/http-hook';
 
 const Team = ({ onClose }) => {
-  const [TeamName, setTeamName] = useState('');
+  const auth = useContext(AuthContext);
+  const { isLoading, sendRequest } = useHttpClient();
+  const [teamName, setTeamName] = useState('');
   const [teamLead, setTeamLead] = useState('');
   const [teamMembers, setTeamMembers] = useState('');
   const [users, setUsers] = useState([]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Validate and process the form data
-    if (TeamName.trim() === '' || teamLead.trim() === '' || teamMembers.trim() === '') {
+    if (teamName.trim() === '' || teamLead.trim() === '' || teamMembers.trim() === '') {
       alert('Please enter Team name, team lead, and team Members.');
       return;
     }
-
-    // Process the team Members to extract individual teams
-    const teamMembersArray = teamMembers.split(',').map((team) => team.trim());
-
-    // Process the team lead and users to extract individual members
-    const userListArray = teamLead.split(',').map((user) => user.trim());
-    setUsers(userListArray);
+    const newTeam = {
+      teamName,
+      teamLead,
+      teamMembers
+    };
+    try {
+      console.log(newTeam);
+      const response = await sendRequest (
+        'http://localhost:3001/api/teams', 
+        'POST',
+        JSON.stringify(newTeam),
+        {
+          'Content-Type' : 'application/json'
+        }
+      );
+      console.log(response);
+      }
+      catch(err) {
+        console.log(err);
+      }
 
     // Clear the form fields after submission
     setTeamName('');
@@ -36,11 +53,11 @@ const Team = ({ onClose }) => {
       <h2>Create New Team</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="TeamName">Team Name</label>
+          <label htmlFor="teamName">Team Name</label>
           <input
             type="text"
-            id="TeamName"
-            value={TeamName}
+            id="teamName"
+            value={teamName}
             onChange={(e) => setTeamName(e.target.value)}
             required
           />

@@ -1,23 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Task from '../Task/Task.js';
 import Team from '../Team/Team.js';
 import './Dashboard.css';
+import { AuthContext } from '../../Shared/context/auth-context';
+import { useHttpClient } from '../../Shared/hooks/http-hook';
 
 const Dashboard = () => {
+  const auth = useContext(AuthContext);
+  const { isLoading, sendRequest } = useHttpClient();
   const [isTaskPopupOpen, setTaskPopupOpen] = useState(false);
   const [isTeamPopupOpen, setTeamPopupOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState('All');
   const [selectedTeam, setSelectedTeam] = useState('');
-  const tabs = ['All', 'To-do', 'Complete', 'Approve'];
-  const Teams = ['Team A', 'Team B', 'Team C'];
-  const tasks = [
-    { id: 1, name: 'Task 1', status: 'To-do', Team: 'Team A' },
-    { id: 2, name: 'Task 2', status: 'Complete', Team: 'Team B' },
-    { id: 3, name: 'Task 3', status: 'To-do', Team: 'Team C' },
-    { id: 4, name: 'Task 4', status: 'Approve', Team: 'Team A' },
-    { id: 5, name: 'Task 5', status: 'Complete', Team: 'Team C' },
-    { id: 6, name: 'Task 6', status: 'To-do', Team: 'Team B' },
-  ];
+  const tabs = ['All', 'To-do', 'InProgress', 'Complete', 'Approved'];
+  const [teams, setTeams] = useState([]);
+  const [tasks, setTasks] = useState([]); // Added state for tasks
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      try {
+        const storedUserName = localStorage.getItem("enteredUserName");
+        const userName = JSON.parse(storedUserName);
+        console.log(userName);
+        const response = await sendRequest(`http://localhost:3001/api/teams/user/${userName}`);
+        setTeams(response.map((team) => team.teamName));
+      } catch (error) {
+        console.log("catch Block");
+      }
+    };
+
+    const fetchTasks = async () => {
+      try {
+        if (selectedTeam) {
+          const response = await sendRequest(`http://localhost:3001/api/task/${selectedTeam}`);
+          const filteredTasksData = response.map((task) => {
+            return {
+              name: task.taskName,
+              status: task.taskStatus,
+              Team: task.teamName,
+            };
+          });
+          setTasks(filteredTasksData);
+          //setTasks(response);
+        }
+      } catch (error) {
+        console.log("catch Block");
+      }
+    };
+
+    fetchTeams();
+    fetchTasks();
+  }, [selectedTeam, sendRequest]);
 
   const openTaskPopup = () => {
     setTaskPopupOpen(true);
@@ -39,7 +72,7 @@ const Dashboard = () => {
     setSelectedTab(tab);
   };
 
-  const handleTeamClick = (team) => {
+  const handleTeamClick = async (team) => {
     setSelectedTeam(team);
   };
 
@@ -70,7 +103,7 @@ const Dashboard = () => {
           Create Team
         </button>
         <ul className="Team-list">
-          {Teams.map((team) => (
+          {teams.map((team) => (
             <li
               key={team}
               onClick={() => handleTeamClick(team)}
@@ -141,4 +174,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
