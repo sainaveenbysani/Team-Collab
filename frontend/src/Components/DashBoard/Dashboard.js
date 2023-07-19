@@ -7,15 +7,16 @@ const Dashboard = () => {
   const [isTaskPopupOpen, setTaskPopupOpen] = useState(false);
   const [isTeamPopupOpen, setTeamPopupOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState('All');
+  const [selectedTeam, setSelectedTeam] = useState('');
   const tabs = ['All', 'To-do', 'Complete', 'Approve'];
-  const projects = ['Project A', 'Project B', 'Project C'];
+  const Teams = ['Team A', 'Team B', 'Team C'];
   const tasks = [
-    { id: 1, name: 'Task 1', status: 'To-do', project: 'Project A' },
-    { id: 2, name: 'Task 2', status: 'Complete', project: 'Project B' },
-    { id: 3, name: 'Task 3', status: 'To-do', project: 'Project C' },
-    { id: 4, name: 'Task 4', status: 'Approve', project: 'Project A' },
-    { id: 5, name: 'Task 5', status: 'Complete', project: 'Project C' },
-    { id: 6, name: 'Task 6', status: 'To-do', project: 'Project B' },
+    { id: 1, name: 'Task 1', status: 'To-do', Team: 'Team A' },
+    { id: 2, name: 'Task 2', status: 'Complete', Team: 'Team B' },
+    { id: 3, name: 'Task 3', status: 'To-do', Team: 'Team C' },
+    { id: 4, name: 'Task 4', status: 'Approve', Team: 'Team A' },
+    { id: 5, name: 'Task 5', status: 'Complete', Team: 'Team C' },
+    { id: 6, name: 'Task 6', status: 'To-do', Team: 'Team B' },
   ];
 
   const openTaskPopup = () => {
@@ -38,10 +39,23 @@ const Dashboard = () => {
     setSelectedTab(tab);
   };
 
-  const filteredTasks =
-    selectedTab === 'All'
-      ? tasks
-      : tasks.filter((task) => task.status === selectedTab);
+  const handleTeamClick = (team) => {
+    setSelectedTeam(team);
+  };
+
+  const filteredTasks = tasks.filter((task) => {
+    if (selectedTab === 'All' && selectedTeam === '') {
+      return true; // Show all tasks when no tab or team is selected
+    } else if (selectedTab === 'All' && selectedTeam !== '') {
+      return task.Team === selectedTeam; // Filter by selected team only
+    } else if (selectedTab !== 'All' && selectedTeam === '') {
+      return task.status === selectedTab; // Filter by selected tab only
+    } else {
+      return (
+        task.status === selectedTab && task.Team === selectedTeam
+      ); // Filter by both selected tab and team
+    }
+  });
 
   const handleOverlayClick = (event) => {
     if (!event.target.closest('.popup-center')) {
@@ -55,15 +69,21 @@ const Dashboard = () => {
         <button className="create-team-button" onClick={openTeamPopup}>
           Create Team
         </button>
-        <ul className="project-list">
-          {projects.map((project) => (
-            <li key={project}>{project}</li>
+        <ul className="Team-list">
+          {Teams.map((team) => (
+            <li
+              key={team}
+              onClick={() => handleTeamClick(team)}
+              className={selectedTeam === team ? 'active' : ''}
+            >
+              {team}
+            </li>
           ))}
         </ul>
       </div>
       <div className="content">
         <div className="topbar">
-          <button className="create-task-button" onClick={openTaskPopup}>
+          <button className="create-task-button right-corner" onClick={openTaskPopup}>
             {isTaskPopupOpen ? 'Close Task' : 'Create Task'}
           </button>
         </div>
@@ -84,7 +104,7 @@ const Dashboard = () => {
               <tr>
                 <th>Task</th>
                 <th>Status</th>
-                <th>Project</th>
+                <th>Team</th>
               </tr>
             </thead>
             <tbody>
@@ -92,7 +112,7 @@ const Dashboard = () => {
                 <tr key={task.id}>
                   <td>{task.name}</td>
                   <td>{task.status}</td>
-                  <td>{task.project}</td>
+                  <td>{task.Team}</td>
                 </tr>
               ))}
             </tbody>
@@ -121,3 +141,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
