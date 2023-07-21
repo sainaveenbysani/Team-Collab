@@ -1,18 +1,6 @@
 const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
-// const bcrypt = require('bcryptjs');
-// const jwt= require('jsonwebtoken');
-
-// const getUsers = async (req, res, next) => {
-//   let users;
-//   try {
-//     users = await User.find({}, '-password');
-//   } catch (err) {
-//     return res.status(500).json( { message: 'Fetching places has failed, please try again later'  });
-//   }
-//   res.json({ users: users.map(user => user.toObject({ getters: true })) });
-// };
 
 
 const signup = async (req, res, next) => {
@@ -52,8 +40,6 @@ const signup = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   const { userName, password } = req.body;
-  // console.log(userName);
-  // console.log(password);
 
   let existingUser;
 
@@ -62,7 +48,7 @@ const login = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json( { message: 'Login failed'  });
   }
-  // console.log(existingUser);
+
   if (!existingUser || existingUser.password !== password) {
     return res.status(422).json( { message: 'Invalid credentials'  });
   }
