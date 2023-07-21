@@ -81,10 +81,7 @@ const Update= ({ onClose, taskData }) => {
 
   const handleApprove = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    // You can access the captured values from the state variables above
-
-    // Create a new task object with the captured values
+ 
     const updatedTask = {
       taskName,
       taskDescription,
@@ -117,10 +114,7 @@ const Update= ({ onClose, taskData }) => {
 
   const handleDelete= async(e)=>{
     e.preventDefault();
-    // Handle form submission logic here
-    // You can access the captured values from the state variables above
 
-    // Create a new task object with the captured values
     const deleteTask = {
       taskName,
       taskDescription,
@@ -153,10 +147,7 @@ const Update= ({ onClose, taskData }) => {
 
   const handleUpdate=async (e)=>{
     e.preventDefault();
-    // Handle form submission logic here
-    // You can access the captured values from the state variables above
 
-    // Create a new task object with the captured values
     const updatedTask = {
       taskName,
       taskDescription,

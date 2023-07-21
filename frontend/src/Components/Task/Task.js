@@ -19,10 +19,7 @@ const Task = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    // You can access the captured values from the state variables above
 
-    // Create a new task object with the captured values
     const newTask = {
       taskName,
       taskDescription,
@@ -51,7 +48,7 @@ const Task = ({ onClose }) => {
         console.log(err);
       }
 
-    // Perform additional actions with the new task object, such as sending it to an API or updating the task list
+
 
     // Reset the form fields
     setTaskName('');
